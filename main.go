@@ -35,21 +35,11 @@ func main(){
 	http.ListenAndServe(":8080",nil)
 }
 
-func Delete(w http.ResponseWriter, r *http.Request ){
-	idEmployee:= r.URL.Query().Get("id")
-	fmt.Println(idEmployee)
-	connectDone := conectBD()
-	deleteRegistry,err := connectDone.Prepare("DELETE FROM employees WHERE id=?")
-	if  err!=nil { panic(err.Error())}
-	deleteRegistry.Exec(idEmployee)
 
-	http.Redirect(w,r,"/",301)
-}
 type Employee struct {
 	Id int
 	Name string
 	Email string
-
 }
 func Home(w http.ResponseWriter, r *http.Request ){
 	connectDone := conectBD()
@@ -75,8 +65,6 @@ func Home(w http.ResponseWriter, r *http.Request ){
 		arrayEmployee=append(arrayEmployee,employee)
 		
 	}
-	//fmt.Println(arrayEmployee)
-	//fmt.Fprintf(w, "Hi from CRUD 1")
 	templates.ExecuteTemplate(w,"home",arrayEmployee)
 
 }
@@ -105,7 +93,6 @@ func Edit(w http.ResponseWriter, r *http.Request ){
 	templates.ExecuteTemplate(w,"edit",employee)
 	
 }
-
 func Create(w http.ResponseWriter, r *http.Request ){
 	//fmt.Fprintf(w, "Hi from CRUD 1")
 	templates.ExecuteTemplate(w,"create",nil)
@@ -137,4 +124,14 @@ func Insert(w http.ResponseWriter, r *http.Request){
 		insertRegistry.Exec (name,email)
 		http.Redirect(w,r,"/",301)
 	}
+}
+func Delete(w http.ResponseWriter, r *http.Request ){
+	idEmployee:= r.URL.Query().Get("id")
+	fmt.Println(idEmployee)
+	connectDone := conectBD()
+	deleteRegistry,err := connectDone.Prepare("DELETE FROM employees WHERE id=?")
+	if  err!=nil { panic(err.Error())}
+	deleteRegistry.Exec(idEmployee)
+
+	http.Redirect(w,r,"/",301)
 }
