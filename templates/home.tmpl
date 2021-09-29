@@ -1,0 +1,30 @@
+{{define "home" }}  
+{{template "head" }}    
+    <a name="" id="" class="btn btn-primary" href="/create" role="button">Add employee</a>
+    <br/> <br/>
+    <table class="table">
+          <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Accion</th>
+              </tr>
+          </thead>
+          <tbody>
+        {{range.}}
+              <tr>
+                  <td scope="row"> {{.Id}} </td>
+                  <td> {{.Name}} </td>
+                  <td> {{.Email}} </td>
+                  <td>
+                  <a name="" id="" class="btn btn-warning" href="/edit?id={{.Id}}" role="button">edit</a>
+                  |
+                  <a name="" id="" class="btn btn-danger" href="/delete?id={{.Id}}" role="button">delete</a>
+                   </td>
+              </tr>
+        {{end}}
+          </tbody>
+      </table>
+{{template "foot" }}
+{{end}}
